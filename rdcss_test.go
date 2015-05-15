@@ -21,15 +21,13 @@ func TestRDCSS(t *testing.T) {
 		y: expected,
 	}
 
-	old := (*field)(RDCSS(
+	if !RDCSS(
 		(*unsafe.Pointer)(unsafe.Pointer(&c.x)),
 		unsafe.Pointer(c.x),
 		(*unsafe.Pointer)(unsafe.Pointer(&c.y)),
 		unsafe.Pointer(c.y),
-		unsafe.Pointer(&field{"baz"})))
-
-	if old != expected {
-		t.Errorf("Expected %+v, got %+v", expected, old)
+		unsafe.Pointer(&field{"baz"})) {
+		t.Errorf("Expected RDCSS to succeed")
 	}
 
 	if c.y.x != "baz" {
